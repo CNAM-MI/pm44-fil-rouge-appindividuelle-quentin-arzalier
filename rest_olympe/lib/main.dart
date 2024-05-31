@@ -1,11 +1,26 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:rest_olympe/ini/http_override.dart';
+import 'package:rest_olympe/ini/notification_setup.dart';
+import 'package:rest_olympe/ini/signalr_connection.dart';
 import 'package:rest_olympe/pages/create_lobby.dart';
 import 'package:rest_olympe/pages/join_lobby.dart';
 import 'package:rest_olympe/pages/login_screen.dart';
 import 'package:rest_olympe/pages/main_menu.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    
+    if (kDebugMode) {
+      HttpOverrides.global = MyHttpOverrides();
+    }
+    await initNotifications();
+    initSignalRHub();
+    await requestNotifPermissions();
+
+    runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

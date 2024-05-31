@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rest_olympe/components/custom_light_input.dart';
 import 'package:rest_olympe/components/resto_card.dart';
@@ -58,7 +59,7 @@ class _CreateLobbyState extends State<CreateLobby> {
                         },
                         placeholder: "Entrez le nom du salon",
                         onSaved: (String? newValue) {
-                          // TODO : faire qq chose
+                          print("Le nom du salon est : $newValue");
                         },
                       ),
                       Padding(
@@ -87,7 +88,16 @@ class _CreateLobbyState extends State<CreateLobby> {
                           },
                           placeholder: "Distance en km",
                           onSaved: (String? newValue) {
-                            // TODO : faire qq chose
+                            print("La distance en KM est : $newValue");
+                            Geolocator
+                              .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
+                              .then((Position position) {
+                                setState(() {
+                                  print("Avec pour position : ${position.longitude} ${position.latitude}");
+                                });
+                              }).catchError((e) {
+                                print(e);
+                              });
                           },
                         ) : Container(),
                     ]
