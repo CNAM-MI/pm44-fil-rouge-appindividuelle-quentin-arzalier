@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:rest_olympe/components/styled_button.dart';
+import 'package:rest_olympe/controllers/api_controller.dart';
 import 'package:rest_olympe/shared/layout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _loadUsername() async {
     final prefs = await SharedPreferences.getInstance();
-    if (prefs.getString("username") != null) {
+    if (prefs.getString("user") != null) {
       if (mounted) Navigator.pushNamed(context, "/");
     }
   }
@@ -53,9 +56,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   onSaved: (newValue) async {
                     if (newValue != null) {
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.setString("username", newValue);
-                      if (context.mounted) Navigator.pushNamed(context, "/");
+                      final user = await ApiController.createUser(newValue);
+                      if (user != null)
+                      {
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.setString("user", jsonEncode(user.toJson()));
+                        if (context.mounted) {
+                          Navigator.pushNamed(context, "/");
+                        }
+                      }
                     }
                   },
                 ),

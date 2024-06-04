@@ -4,6 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:rest_olympe/components/custom_light_input.dart';
 import 'package:rest_olympe/components/resto_card.dart';
 import 'package:rest_olympe/components/styled_button.dart';
+import 'package:rest_olympe/controllers/api_controller.dart';
 import 'package:rest_olympe/shared/layout.dart';
 
 class CreateLobby extends StatefulWidget {
@@ -19,10 +20,23 @@ class _CreateLobbyState extends State<CreateLobby> {
   bool limitAroundPosition = false;
   bool canUseLocationLimit = false;
 
+  String? lobbyName;
+  int? kmRadius;
+  bool lobbyCreated = false;
+
   @override
   void initState() {
     super.initState();
     initPermissions();
+  }
+
+  Future<void> tryCreateLobby() async
+  {
+    if (lobbyName != null && kmRadius != null && !lobbyCreated)
+    {
+      lobbyCreated = true;
+      await ApiController.createLobby(lobbyName!, kmRadius!);
+    }
   }
 
   Future<void> initPermissions() async {
@@ -58,8 +72,11 @@ class _CreateLobbyState extends State<CreateLobby> {
                           return null;
                         },
                         placeholder: "Entrez le nom du salon",
-                        onSaved: (String? newValue) {
-                          print("Le nom du salon est : $newValue");
+                        onSaved: (String? newValue) async {
+                          setState(() {
+                            lobbyName = newValue;
+                          });
+                          await tryCreateLobby();
                         },
                       ),
                       Padding(
@@ -87,17 +104,11 @@ class _CreateLobbyState extends State<CreateLobby> {
                             return null;
                           },
                           placeholder: "Distance en km",
-                          onSaved: (String? newValue) {
-                            print("La distance en KM est : $newValue");
-                            Geolocator
-                              .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
-                              .then((Position position) {
-                                setState(() {
-                                  print("Avec pour position : ${position.longitude} ${position.latitude}");
-                                });
-                              }).catchError((e) {
-                                print(e);
-                              });
+                          onSaved: (String? newValue) async {
+                            setState(() {
+                              kmRadius = int.parse(newValue!);
+                            });
+                            await tryCreateLobby();
                           },
                         ) : Container(),
                     ]

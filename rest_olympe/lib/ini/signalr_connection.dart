@@ -1,9 +1,10 @@
 import 'package:logging/logging.dart';
+import 'package:rest_olympe/ini/http_initialize.dart';
 import 'package:rest_olympe/ini/notification_setup.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
 
-const restoSignalRHub = "https://10.0.2.2:49169/restohub";
+const restoSignalRHub = "$baseServerUrl/restohub";
 
 // If you want only to log out the message for the higer level hub protocol:
 final hubProtLogger = Logger("SignalR - hub");

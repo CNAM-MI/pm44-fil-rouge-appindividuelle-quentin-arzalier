@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rest_olympe/ini/http_override.dart';
+import 'package:rest_olympe/ini/http_initialize.dart';
 import 'package:rest_olympe/ini/notification_setup.dart';
 import 'package:rest_olympe/ini/signalr_connection.dart';
 import 'package:rest_olympe/pages/create_lobby.dart';
