@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rest_olympe/components/custom_light_input.dart';
 import 'package:rest_olympe/components/resto_card.dart';

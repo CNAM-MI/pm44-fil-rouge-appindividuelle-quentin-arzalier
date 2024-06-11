@@ -1,6 +1,6 @@
 import 'package:logging/logging.dart';
-import 'package:rest_olympe/ini/http_initialize.dart';
-import 'package:rest_olympe/ini/notification_setup.dart';
+import 'package:rest_olympe/util/http_initialize.dart';
+import 'package:rest_olympe/util/notification_setup.dart';
 import 'package:signalr_netcore/signalr_client.dart';
 
 

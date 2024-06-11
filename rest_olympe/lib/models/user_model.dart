@@ -3,10 +3,10 @@ class UserModel {
   String userId; 
   
   UserModel.fromJson(Map<String, dynamic> json) :
-    username = json['username'],
+    username = json['userName'],
     userId = json['userId'];  
     
   Map<String, dynamic> toJson() {
-    return <String, dynamic>{ 'username': username, 'userId': userId };
+    return <String, dynamic>{ 'userName': username, 'userId': userId };
   }
 }

@@ -2,13 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rest_olympe/ini/http_initialize.dart';
-import 'package:rest_olympe/ini/notification_setup.dart';
-import 'package:rest_olympe/ini/signalr_connection.dart';
-import 'package:rest_olympe/pages/create_lobby.dart';
-import 'package:rest_olympe/pages/join_lobby.dart';
-import 'package:rest_olympe/pages/login_screen.dart';
-import 'package:rest_olympe/pages/main_menu.dart';
+import 'package:rest_olympe/util/http_initialize.dart';
+import 'package:rest_olympe/util/notification_setup.dart';
+import 'package:rest_olympe/util/route_generator.dart';
+import 'package:rest_olympe/util/signalr_connection.dart';
 
 Future<void> main() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -48,12 +45,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      routes: {
-        '/' : (context) => const MainMenu(),
-        '/login' : (context) => const LoginScreen(),
-        '/lobby/create' : (context) => const CreateLobby(),
-        '/lobby/join' : (context) => const JoinLobby(),
-      },
+      onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: "/login",
     );
   }

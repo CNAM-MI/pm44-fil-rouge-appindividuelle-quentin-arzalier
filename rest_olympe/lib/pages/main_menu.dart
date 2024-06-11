@@ -34,11 +34,22 @@ class MainMenu extends StatelessWidget {
               child: const Text("Rejoindre un salon")
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 40),
+            child: StyledButton(
+              isPrimary: true,
+              onPressed: () { 
+                Navigator.pushNamed(context, "/lobby/list");
+              },
+              child: const Text("Mes salons")
+            ),
+          ),
           StyledButton(
             isPrimary: false,
             onPressed: () async { 
               final prefs = await SharedPreferences.getInstance();
               await prefs.remove("username");
+              await prefs.remove("user");
               if (context.mounted) Navigator.pushNamed(context, "/login");
             },
             child: const Text("Se déconnecter")

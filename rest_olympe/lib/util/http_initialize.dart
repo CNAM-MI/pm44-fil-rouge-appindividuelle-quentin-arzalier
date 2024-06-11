@@ -1,6 +1,6 @@
 import 'dart:io';
 
-const String baseServerUrl = 'https://10.0.2.2:49169';
+const String baseServerUrl = 'https://129.151.237.216:49169';
 
 class MyHttpOverrides extends HttpOverrides{
   @override
