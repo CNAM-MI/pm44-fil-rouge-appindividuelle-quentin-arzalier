@@ -72,9 +72,6 @@ class _JoinLobbyState extends State<JoinLobby> with WidgetsBindingObserver  {
     {
       Navigator.pushNamed(context, "/lobby", arguments: lobbyId);
     }
-    else {
-      print("Error while trying to join lobby!");
-    }
   }
 
 
@@ -158,7 +155,6 @@ class _JoinLobbyState extends State<JoinLobby> with WidgetsBindingObserver  {
                 ),
                 onSaved: (String? newValue) async {
                   if (newValue == null) {
-                    print("Null newValue");
                     return;
                   }
                   var uuid = Helpers.parseUuidWithoutHyphens(newValue);

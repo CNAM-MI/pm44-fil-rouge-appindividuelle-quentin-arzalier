@@ -207,7 +207,6 @@ class _VoteScreenState extends State<VoteScreen> {
                                   if (newVote != null)
                                   {
                                     final toReplace = currentVotes!.indexWhere((element) => element.osmId == newVote.osmId,);
-                                    print(newVote.osmId);
                                     setState(() {
                                       if (toReplace != -1)
                                       {

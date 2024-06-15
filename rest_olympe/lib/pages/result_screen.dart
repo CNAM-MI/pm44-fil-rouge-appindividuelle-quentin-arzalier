@@ -74,7 +74,6 @@ class _ResultScreenState extends State<ResultScreen> {
     for (var result in results!) {
       if (previousScore != result.voteCount)
       {
-        print("Avant $previousScore Apres ${result.voteCount}");
         rank++;
       }
       children.add(

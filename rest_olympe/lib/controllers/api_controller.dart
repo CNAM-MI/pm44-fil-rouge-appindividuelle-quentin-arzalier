@@ -41,8 +41,6 @@ class ApiController {
       return UserModel.fromJson(response.data);
     }
     else {
-      print("CreateUser responded ${response.statusCode}");
-      print("Message : ${response.data}");
     }
     return null;
   }
@@ -67,23 +65,18 @@ class ApiController {
       return LobbyModel.fromJson(response.data);
     }
     else {
-      print("createLobby responded ${response.statusCode}");
-      print("Message : ${response.data}");
     }
     return null;
   }
 
   static Future<LobbyModel?> getLobby(String lobbyId) async
   {
-    print(lobbyId);
     final response = await dio.get("/lobby/$lobbyId");
     
     if (response.statusCode == 200) {
       return LobbyModel.fromJson(response.data['lobby']);
     }
     else {
-      print("getLobby responded ${response.statusCode}");
-      print("Message : ${response.data}");
     }
     return null;
   }
@@ -103,8 +96,6 @@ class ApiController {
       return true;
     }
     else {
-      print("joinLobby responded ${response.statusCode}");
-      print("Message : ${response.data}");
     }
     return false;
   }
@@ -119,8 +110,6 @@ class ApiController {
       return List.from(response.data["lobbies"].map((e) => LobbyModel.fromJson(e)));
     }
     else {
-      print("getLobbiesOfUser responded ${response.statusCode}");
-      print("Message : ${response.data}");
     }
     return List.empty();
   }
@@ -134,8 +123,6 @@ class ApiController {
       return List.from(response.data["votes"].map((e) => VoteModel.fromJson(e)));
     }
     else {
-      print("getLobbyVotes responded ${response.statusCode}");
-      print("Message : ${response.data}");
     }
     return List.empty();
   }
@@ -149,8 +136,6 @@ class ApiController {
       return List.from(response.data["users"].map((e) => UserModel.fromJson(e)));
     }
     else {
-      print("getLobbyUsers responded ${response.statusCode}");
-      print("Message : ${response.data}");
     }
     return List.empty();
   }
@@ -164,8 +149,6 @@ class ApiController {
       return List.from(response.data["votes"].map((e) => VoteModel.fromJson(e)));
     }
     else {
-      print("getLobbyVotesOfUser responded ${response.statusCode}");
-      print("Message : ${response.data}");
     }
     return List.empty();
   }
@@ -179,8 +162,6 @@ class ApiController {
       return List.from(response.data["results"].map((e) => RestaurantModel.fromJson(e)));
     }
     else {
-      print("getLobbyRestaurants responded ${response.statusCode}");
-      print("Message : ${response.data}");
     }
     return List.empty();
   }
@@ -214,13 +195,9 @@ class ApiController {
         return VoteModel.fromJson(responsePatch.data);
       }
       else {
-        print("createOrUpdateVote responded ${responsePatch.statusCode}");
-        print("Message : ${responsePatch.data}");
       }
     }
     else {
-      print("createOrUpdateVote responded ${response.statusCode}");
-      print("Message : ${response.data}");
     }
 
     return null;
@@ -240,8 +217,6 @@ class ApiController {
       return true;
     }
     else {
-      print("createOrUpdateVote responded ${response.statusCode}");
-      print("Message : ${response.data}");
       return false;
     }
   }
@@ -255,8 +230,6 @@ class ApiController {
       return List.from(response.data["results"].map((e) => ResultModel.fromJson(e)));
     }
     else {
-      print("createOrUpdateVote responded ${response.statusCode}");
-      print("Message : ${response.data}");
       return null;
     }
   }

@@ -16,13 +16,8 @@ class SignalRController {
 
   static Future<void> initSignalRHub() async
   {
-    print(_restoSignalRHub);
     // Configer the logging
     Logger.root.level = Level.ALL;
-    // Writes the log messages to the console
-    Logger.root.onRecord.listen((LogRecord rec) {
-      print('${rec.level.name}: ${rec.time}: ${rec.message}');
-    });
 
     final httpOptions = HttpConnectionOptions(logger: _transportProtLogger);
 
@@ -39,20 +34,6 @@ class SignalRController {
       }
     });
 
-    // When the connection is closed, print out a message to the console.
-    hub.onclose(({Exception? error}) {
-      print("Connection Closed");
-    });
-
     await hub.start();
-    
-    if (hub.state != HubConnectionState.Connected)
-    {
-      print("SignalR init failed");
-      print(hub.state);
-      return;
-    }
-    print("SignalR init successful");
-
   }
 }

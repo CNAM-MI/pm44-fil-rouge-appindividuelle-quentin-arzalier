@@ -300,9 +300,6 @@ class _LobbyScreenState extends State<LobbyScreen> {
                                         endScreenVisible = false;
                                       });
                                     }
-                                    else {
-                                      print("Error while closing lobby ${lobby!.lobbyId}.");
-                                    }
                                   },
                                   child: const Text("Terminer le vote"),
                                 ),
