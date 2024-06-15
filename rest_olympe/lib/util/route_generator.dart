@@ -5,6 +5,7 @@ import 'package:rest_olympe/pages/lobby_list.dart';
 import 'package:rest_olympe/pages/lobby_screen.dart';
 import 'package:rest_olympe/pages/login_screen.dart';
 import 'package:rest_olympe/pages/main_menu.dart';
+import 'package:rest_olympe/pages/result_screen.dart';
 import 'package:rest_olympe/pages/vote_screen.dart';
 
 class RouteGenerator {
@@ -28,6 +29,12 @@ class RouteGenerator {
           if (args is String)
           {
             return MaterialPageRoute(builder: (context) => VoteScreen(lobbyId: args));
+          }
+          return _errorRoute();
+        case '/lobby/results': 
+          if (args is String)
+          {
+            return MaterialPageRoute(builder: (context) => ResultScreen(lobbyId: args));
           }
           return _errorRoute();
         case '/lobby/create': 

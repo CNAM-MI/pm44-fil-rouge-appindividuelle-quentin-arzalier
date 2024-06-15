@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:rest_olympe/models/restaurant_model.dart';
+import 'package:rest_olympe/models/result_model.dart';
 import 'package:rest_olympe/models/vote_model.dart';
 import 'package:rest_olympe/util/http_initialize.dart';
 import 'package:rest_olympe/models/lobby_model.dart';
@@ -225,4 +226,38 @@ class ApiController {
     return null;
   }
 
+  static Future<bool> closeLobby(String lobbyId) async
+  {
+    final user = await _getUserFromPrefsAsync();
+
+    final response = await dio.post("/lobby/$lobbyId/close",
+    data: FormData.fromMap({
+      'adminId': user.userId
+    }));
+
+    if (response.statusCode == 204)
+    {
+      return true;
+    }
+    else {
+      print("createOrUpdateVote responded ${response.statusCode}");
+      print("Message : ${response.data}");
+      return false;
+    }
+  }
+
+  static Future<List<ResultModel>?> getLobbyResults(String lobbyId) async {
+    
+    final response = await dio.get("/lobby/$lobbyId/result");
+
+    if (response.statusCode == 200)
+    {
+      return List.from(response.data["results"].map((e) => ResultModel.fromJson(e)));
+    }
+    else {
+      print("createOrUpdateVote responded ${response.statusCode}");
+      print("Message : ${response.data}");
+      return null;
+    }
+  }
 }

@@ -29,6 +29,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
   List<VoteModel>? lobbyVotes;
   UserModel? currentUser;
   bool qrCodeVisible = false;
+  bool endScreenVisible = false;
 
   @override
   void initState() {
@@ -153,7 +154,15 @@ class _LobbyScreenState extends State<LobbyScreen> {
                     }, 
                     child: const Text("Retour au menu")
                   ),
-                  StyledButton(
+                  
+                  if (lobby != null && lobby!.isClosed) StyledButton(
+                    isPrimary: true, 
+                    onPressed: (){
+                      Navigator.pushNamed(context, "/lobby/results", arguments: lobby!.lobbyId);
+                    },
+                    child: const Text("Voir résultats"),
+                  ) 
+                  else if (lobby != null) StyledButton(
                     isPrimary: true, 
                     onPressed: (){
                       if (lobby != null) {
@@ -163,7 +172,16 @@ class _LobbyScreenState extends State<LobbyScreen> {
                     child: const Text("Voter")
                   ),
                 ],
-              )
+              ),
+              if (lobby != null && currentUser != null && !lobby!.isClosed && lobby!.adminId == currentUser!.userId) StyledButton(
+                isPrimary: true, 
+                onPressed: (){
+                  setState(() {
+                    endScreenVisible = true;
+                  });
+                },
+                child: const Text("Mettre fin au vote"),
+              ),
             ],
           ),
         ),
@@ -223,6 +241,59 @@ class _LobbyScreenState extends State<LobbyScreen> {
                     });
                   }, 
                   child: const Icon(Icons.qr_code)
+                ),
+              ),
+              if (endScreenVisible) Container(
+                color: const Color.fromARGB(114, 0, 0, 0),
+                child: Center(
+                  child: lobby == null 
+                    ? const CircularProgressIndicator()
+                    : Center(
+                      child: RestoCard(
+                        child: Column(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                "Voulez vous vraiment mettre fin au vote? Cette décision est irréversible.",
+                                textAlign: TextAlign.center,  
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                StyledButton(
+                                  isPrimary: false, 
+                                  onPressed: (){
+                                    setState(() {
+                                      endScreenVisible = false;
+                                    });
+                                  },
+                                  child: const Text("Annuler"),
+                                ),
+                                StyledButton(
+                                  isPrimary: false, 
+                                  onPressed: () async {
+                                    final changeWorked = await ApiController.closeLobby(lobby!.lobbyId);
+                                    if (changeWorked)
+                                    {
+                                      setState(() {
+                                        lobby!.isClosed = true;
+                                        endScreenVisible = false;
+                                      });
+                                    }
+                                    else {
+                                      print("Error while closing lobby ${lobby!.lobbyId}.");
+                                    }
+                                  },
+                                  child: const Text("Terminer le vote"),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                 ),
               ),
             ],

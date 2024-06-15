@@ -38,13 +38,16 @@ class _LobbyListState extends State<LobbyList> {
   Widget _lobbyList()
   {
     return Column(
-      children: lobbies.map((e) => StyledButton(
-        isPrimary: false, 
-        onPressed: () {
-          Navigator.pushNamed(context, "/lobby", arguments: e.lobbyId);
-        }, 
-        child: Text(e.name)
-        )
+      children: lobbies.map((e) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: StyledButton(
+          isPrimary: false, 
+          onPressed: () {
+            Navigator.pushNamed(context, "/lobby", arguments: e.lobbyId);
+          }, 
+          child: Text("${e.name} ${e.isClosed ? "[FINI]" : ""}")
+          ),
+      )
       ).toList(),
     );
   } 
