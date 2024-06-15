@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class StyledButton extends StatelessWidget {
-  const StyledButton({super.key, required this.isPrimary, required this.onPressed, required this.child});
+  const StyledButton({super.key, required this.isPrimary, required this.onPressed, this.child});
   
   final VoidCallback onPressed;
-  final Widget child;
+  final Widget? child;
   final bool isPrimary;
   
   @override

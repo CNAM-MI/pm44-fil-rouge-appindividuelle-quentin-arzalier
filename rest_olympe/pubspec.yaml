@@ -44,6 +44,10 @@ dependencies:
   dio: ^5.4.3+1
   mobile_scanner: ^5.1.1
   uuid: ^3.0.7
+  qr_flutter: ^4.1.0
+  flutter_map: ^7.0.1
+  latlong2: ^0.9.1
+  share_plus: ^9.0.0
 
 dev_dependencies:
   flutter_test:

@@ -34,7 +34,11 @@ class _CreateLobbyState extends State<CreateLobby> {
     if (lobbyName != null && kmRadius != null && !lobbyCreated)
     {
       lobbyCreated = true;
-      await ApiController.createLobby(lobbyName!, kmRadius!);
+      var lobby = await ApiController.createLobby(lobbyName!, kmRadius!);
+      if (lobby != null && mounted)
+      {
+        Navigator.pushNamed(context, "/lobby", arguments: lobby.lobbyId);
+      }
     }
   }
 
