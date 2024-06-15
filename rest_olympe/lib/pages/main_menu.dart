@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rest_olympe/components/styled_button.dart';
 import 'package:rest_olympe/shared/layout.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({super.key});
@@ -43,16 +42,6 @@ class MainMenu extends StatelessWidget {
               },
               child: const Text("Mes salons")
             ),
-          ),
-          StyledButton(
-            isPrimary: false,
-            onPressed: () async { 
-              final prefs = await SharedPreferences.getInstance();
-              await prefs.remove("username");
-              await prefs.remove("user");
-              if (context.mounted) Navigator.pushNamed(context, "/login");
-            },
-            child: const Text("Se déconnecter")
           ),
         ],
       )

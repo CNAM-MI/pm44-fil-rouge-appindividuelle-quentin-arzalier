@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:rest_olympe/components/resto_card.dart';
@@ -7,9 +6,7 @@ import 'package:rest_olympe/components/styled_button.dart';
 import 'package:rest_olympe/controllers/api_controller.dart';
 import 'package:rest_olympe/models/lobby_model.dart';
 import 'package:rest_olympe/models/result_model.dart';
-import 'package:rest_olympe/models/user_model.dart';
 import 'package:rest_olympe/shared/layout.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key, required this.lobbyId});
@@ -37,17 +34,8 @@ class _ResultScreenState extends State<ResultScreen> {
     {
       return;
     }
-    final prefs = await SharedPreferences.getInstance();
-    final userJson = prefs.getString("user"); 
-    if (userJson == null && mounted) {
-      Navigator.pushNamed(context, "/login");
-      return;
-    }
-    final user = UserModel.fromJson(json.decode(userJson!));
-  
     final resL = await ApiController.getLobby(widget.lobbyId);
     final resR = await ApiController.getLobbyResults(widget.lobbyId);
-    
 
     setState(() {
       lobby = resL;

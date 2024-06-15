@@ -7,6 +7,7 @@ import 'package:rest_olympe/components/custom_slider.dart';
 import 'package:rest_olympe/components/resto_card.dart';
 import 'package:rest_olympe/components/styled_button.dart';
 import 'package:rest_olympe/controllers/api_controller.dart';
+import 'package:rest_olympe/controllers/signalr_controller.dart';
 import 'package:rest_olympe/models/lobby_model.dart';
 import 'package:rest_olympe/models/restaurant_model.dart';
 import 'package:rest_olympe/models/user_model.dart';
@@ -47,6 +48,17 @@ class _VoteScreenState extends State<VoteScreen> {
   void initState() {
     super.initState();
     unawaited(_fetchLobbyData());
+    SignalRController.hub.on("LobbyClosed", _redirect);
+  }
+
+  @override
+  void dispose(){
+    SignalRController.hub.off("LobbyClosed", method: _redirect);
+    super.dispose();
+  }
+
+  void _redirect(List<Object?>? arguments) async{
+      Navigator.pushNamed(context, "/lobby", arguments: lobby!.lobbyId);
   }
 
   Future<void> _fetchLobbyData() async {
