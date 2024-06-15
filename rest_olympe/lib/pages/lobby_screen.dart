@@ -6,6 +6,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:rest_olympe/components/resto_card.dart';
 import 'package:rest_olympe/components/styled_button.dart';
 import 'package:rest_olympe/controllers/api_controller.dart';
+import 'package:rest_olympe/controllers/signalr_controller.dart';
 import 'package:rest_olympe/models/lobby_model.dart';
 import 'package:rest_olympe/models/user_model.dart';
 import 'package:rest_olympe/models/vote_model.dart';
@@ -35,7 +36,24 @@ class _LobbyScreenState extends State<LobbyScreen> {
   void initState() {
     super.initState();
     unawaited(_fetchLobby());
+    SignalRController.hub.on("NewLobbyMember", _updateLobby);
+    SignalRController.hub.on("VotesChanged", _updateLobby);
+    SignalRController.hub.on("LobbyClosed", _updateLobby);
   }
+
+  @override
+  void dispose(){
+    SignalRController.hub.off("NewLobbyMember", method: _updateLobby);
+    SignalRController.hub.off("VotesChanged", method: _updateLobby);
+    SignalRController.hub.off("LobbyClosed", method: _updateLobby);
+    super.dispose();
+  }
+
+  void _updateLobby(List<Object?>? arguments) async{
+    await _fetchLobby();
+    setState(() {});
+  }
+  
 
   Future<void> _fetchLobby() async {
     if (!mounted)
@@ -185,7 +203,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
             ],
           ),
         ),
-        SafeArea(
+        if (lobby != null && !lobby!.isClosed) SafeArea(
           child: Stack(
             children: [
               Positioned(

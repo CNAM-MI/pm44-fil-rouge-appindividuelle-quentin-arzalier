@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:rest_olympe/util/http_initialize.dart';
 import 'package:rest_olympe/util/notification_setup.dart';
 import 'package:rest_olympe/util/route_generator.dart';
-import 'package:rest_olympe/util/signalr_connection.dart';
+import 'package:rest_olympe/controllers/signalr_controller.dart';
 
 Future<void> main() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +14,7 @@ Future<void> main() async {
       HttpOverrides.global = MyHttpOverrides();
     }
     await initNotifications();
-    initSignalRHub();
+    SignalRController.initSignalRHub();
     await requestNotifPermissions();
 
     runApp(const MyApp());
